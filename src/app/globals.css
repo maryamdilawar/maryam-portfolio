@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0f0518;
+  --color-foreground: #ffffff;
+
+  --color-primary: #d946ef;
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #8b5cf6;
+  --color-secondary-foreground: #ffffff;
+
+  --color-accent: #22d3ee;
+  --color-accent-foreground: #000000;
+
+  --color-card: #1a0b2e;
+  --color-card-foreground: #ededed;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+:root {
+  --background: #0f0518;
+  --foreground: #ffffff;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  selection-background-color: var(--color-primary);
+  selection-color: white;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Custom Utilities */
+.text-glow {
+  text-shadow: 0 0 2px var(--color-primary), 0 0 4px var(--color-primary);
+}
+
+.box-glow {
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+}
