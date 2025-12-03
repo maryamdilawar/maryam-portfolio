@@ -5,7 +5,8 @@ import Section from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 import { Mail, Linkedin, Send, Github } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
 
 export default function ContactPage() {
     const [formState, setFormState] = useState({
@@ -13,12 +14,43 @@ export default function ContactPage() {
         email: "",
         message: "",
     });
+    const [isLoading, setIsLoading] = useState(false);
+    const [status, setStatus] = useState<{ type: "success" | "error" | null; message: string }>({
+        type: null,
+        message: "",
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission logic here (e.g., send to API)
-        console.log(formState);
-        alert("Message sent! (This is a demo)");
+        setIsLoading(true);
+        setStatus({ type: null, message: "" });
+
+        try {
+            await emailjs.send(
+                process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "",
+                process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "",
+                {
+                    from_name: formState.name,
+                    from_email: formState.email,
+                    message: formState.message,
+                },
+                process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || ""
+            );
+
+            setStatus({
+                type: "success",
+                message: "Message sent successfully! I'll get back to you soon.",
+            });
+            setFormState({ name: "", email: "", message: "" });
+        } catch (error) {
+            console.error("EmailJS Error:", error);
+            setStatus({
+                type: "error",
+                message: "Failed to send message. Please try again later or email me directly.",
+            });
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     return (
@@ -97,6 +129,17 @@ export default function ContactPage() {
                         onSubmit={handleSubmit}
                         className="p-8 rounded-2xl bg-card border border-white/10 space-y-6"
                     >
+                        {status.message && (
+                            <div
+                                className={`p-4 rounded-lg ${status.type === "success"
+                                    ? "bg-green-500/10 text-green-500 border border-green-500/20"
+                                    : "bg-red-500/10 text-red-500 border border-red-500/20"
+                                    }`}
+                            >
+                                {status.message}
+                            </div>
+                        )}
+
                         <div>
                             <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
                                 Name
@@ -109,6 +152,7 @@ export default function ContactPage() {
                                 placeholder="Your Name"
                                 value={formState.name}
                                 onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -124,6 +168,7 @@ export default function ContactPage() {
                                 placeholder="your@email.com"
                                 value={formState.email}
                                 onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                                disabled={isLoading}
                             />
                         </div>
 
@@ -139,12 +184,13 @@ export default function ContactPage() {
                                 placeholder="How can I help you?"
                                 value={formState.message}
                                 onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                                disabled={isLoading}
                             />
                         </div>
 
-                        <Button type="submit" className="w-full group">
-                            Send Message
-                            <Send className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
+                        <Button type="submit" className="w-full group" disabled={isLoading}>
+                            {isLoading ? "Sending..." : "Send Message"}
+                            {!isLoading && <Send className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />}
                         </Button>
                     </motion.form>
                 </div>
