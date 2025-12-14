@@ -4,18 +4,19 @@ import { motion } from "framer-motion";
 import Section from "@/components/ui/Section";
 import { Trophy, Award, ThumbsUp, BookOpen, PenTool, Mic, Globe, Code, ExternalLink, FileText } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const achievements = [
     {
         icon: BookOpen,
-        title: "BS Thesis",
-        description: "Aesthetic Violence and Posthumanism in Han Kang's The Vegetarian.",
+        title: "BS Thesis: Aesthetic Violence and Posthumanism in Han Kang's 'The Vegetarian'",
+        description: "My thesis looks at Han Kang's 'The Vegetarian' and how Yeong-hye's body becomes something everyone else gets to define, her husband, her brother-in-law who literally paints her, the doctors. I'm arguing that her transformation into a plant isn't her going crazy; it's her only way out of being constantly watched, judged, and turned into art without her consent. Most scholars read this as trauma or mental illness, but I think she's actually refusing to let them keep using her body as their canvas. I'm using feminist theory and posthumanism to show how the male gaze doesn't just objectify women, it erases them entirely through the pretense of beauty and creativity. What sparks my interest is how the male gaze objectifies women in the name of art.",
         color: "text-primary",
     },
     {
         icon: Trophy,
         title: "Creative Writing Portfolio",
-        description: "'Whispers of the Forgotten' — 2nd Place, LCWU.",
+        description: "This creative portfolio features my novel 'Whispers of the Forgotten', a narrative that reimagines real-world scenarios through an imaginative lens. The story follows Grace, a protagonist trapped in her subconscious while confronting family trauma and substance abuse. The collection is deeply personal, also housing my memoirs, short stories, and poems like 'Abandon Home' and 'Beloved Death,' which received acclaim at the Alkhidmat Foundation.",
         color: "text-yellow-400",
         certificates: [
             { name: "Certificate", path: "/certificates/creative-writing-certificate.pdf" }
@@ -25,6 +26,7 @@ const achievements = [
         icon: PenTool,
         title: "Poems Featured",
         description: "Creative Portfolio Exhibition at Alkhidmat Foundation.",
+        image: "/images/creative-art-exhibition.jpg",
         color: "text-secondary",
         certificates: [
             { name: "Exhibition Cert", path: "/certificates/portfolio-exhibition-certificate.pdf" },
@@ -44,7 +46,7 @@ const achievements = [
     {
         icon: Mic,
         title: "International Conference",
-        description: "Participated in International Conference on Narrative Resilience and Trauma in Literature.",
+        description: "I participated in an International literature conference on 'Narratives of Resilience: Exploring Resurgence in Global Literature' at Lahore College for Women University where academic speakers dealt with resilience in world literature. I got involved in organizing the event, took notes throughout sessions, and asked speakers questions related to their work. Listening to representatives from different nations talk about trauma and identity books I had not yet read made me realize that literature is closely linked with real-world issues we are facing, even as individual beings.",
         color: "text-pink-400",
         certificates: [
             { name: "Participation", path: "/certificates/international-conference-participation.pdf" }
@@ -93,9 +95,20 @@ export default function AchievementsPage() {
                                     {hasLink && <ExternalLink className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />}
                                 </h3>
 
-                                <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-grow">
+                                <p className="text-gray-400 text-sm leading-relaxed mb-4 flex-grow max-h-[150px] overflow-y-auto pr-2 custom-scrollbar">
                                     {achievement.description}
                                 </p>
+
+                                {achievement.image && (
+                                    <div className="w-full relative h-32 mb-4 rounded-lg overflow-hidden shrink-0 border border-white/10 group-hover:border-primary/50 transition-colors">
+                                        <Image
+                                            src={achievement.image}
+                                            alt={achievement.title}
+                                            fill
+                                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                                        />
+                                    </div>
+                                )}
 
                                 {hasCertificates && (
                                     <div className="flex flex-wrap justify-center gap-2 mt-auto relative z-10">
