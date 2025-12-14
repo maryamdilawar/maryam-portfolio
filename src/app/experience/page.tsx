@@ -5,12 +5,13 @@ import Section from "@/components/ui/Section";
 import { Briefcase, Calendar } from "lucide-react";
 
 const experiences = [
+
     {
         role: "SEO Content Writing Intern",
         company: "Smart Digital Fix LLC (Remote)",
         period: "September 2025 – October 2025",
-        description:
-            "Write social media posts for LinkedIn, Instagram, and Facebook focused on digital marketing. Create website blogs covering digital marketing trends and AI in digital marketing.",
+        description: "Write social media posts for LinkedIn, Instagram, and Facebook focused on digital marketing. Create website blogs covering digital marketing trends and AI in digital marketing.",
+        certificatePdf: "/certificates/seo-content-writing-intern.pdf",
     },
     {
         role: "Technical Proposal Writer Intern",
@@ -94,9 +95,22 @@ export default function ExperiencePage() {
                                             {exp.company}
                                         </div>
 
-                                        <p className="text-gray-400 text-sm leading-relaxed">
+                                        <p className="text-gray-400 text-sm leading-relaxed mb-4">
                                             {exp.description}
                                         </p>
+
+                                        {/* @ts-ignore */}
+                                        {exp.certificatePdf && (
+                                            <a
+                                                href={exp.certificatePdf}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="inline-flex items-center gap-2 text-xs font-medium text-primary hover:text-white transition-colors bg-primary/10 hover:bg-primary/20 px-3 py-1.5 rounded-full"
+                                            >
+                                                <Briefcase className="w-3 h-3" />
+                                                View Certificate
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
                             </div>
