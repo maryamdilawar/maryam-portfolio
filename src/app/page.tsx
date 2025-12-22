@@ -57,8 +57,7 @@ export default function Home() {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
-            Blending research, critical thinking, and AI enhancement to create content that
-            ranks, converts, and resonates.
+            I combine my studies in English Literature with AI to keep the human element alive in a digital world.
           </motion.p>
 
           <motion.div
